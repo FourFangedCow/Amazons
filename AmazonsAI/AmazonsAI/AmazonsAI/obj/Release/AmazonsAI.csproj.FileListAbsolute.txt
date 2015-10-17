@@ -1,0 +1,6 @@
+C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonsAI\bin\Release\AmazonsAI.dll
+C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonsAI\bin\Release\AmazonsAI.pdb
+C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonsAI\bin\Release\AmazonAIBase.dll
+C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonsAI\bin\Release\AmazonAIBase.pdb
+C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonsAI\obj\Release\AmazonsAI.dll
+C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonsAI\obj\Release\AmazonsAI.pdb

@@ -1,0 +1,9 @@
+C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonAIBase\bin\Release\AmazonAIBase.dll
+C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonAIBase\bin\Release\AmazonAIBase.pdb
+C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonAIBase\obj\Release\AmazonAIBase.dll
+C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonAIBase\obj\Release\AmazonAIBase.pdb
+Y:\AmazonsAI\AmazonsAI\AmazonAIBase\bin\Release\AmazonAIBase.dll
+Y:\AmazonsAI\AmazonsAI\AmazonAIBase\bin\Release\AmazonAIBase.pdb
+Y:\AmazonsAI\AmazonsAI\AmazonAIBase\obj\Release\AmazonAIBase.csprojResolveAssemblyReference.cache
+Y:\AmazonsAI\AmazonsAI\AmazonAIBase\obj\Release\AmazonAIBase.dll
+Y:\AmazonsAI\AmazonsAI\AmazonAIBase\obj\Release\AmazonAIBase.pdb
