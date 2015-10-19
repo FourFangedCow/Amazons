@@ -9,8 +9,17 @@ using AmazonAIBase;
 public class GameManager : MonoBehaviour {
 
     public GameInst GameInstance = new GameInst();
-    int Width;
-    int Height;
+    int Width = 10;
+	int Height = 10;
+	int NumberOfPlayers = 2;
+	int NumberOfAmazons = 1;
+	public GameObject TileInst;
+	public GameObject AmazonInst;
+	public GameObject ArrowInst;
+
+
+	public void SetWidth(string width) { int.TryParse(width, out Width); }
+	public void SetHeight(string height) { int.TryParse (height, out Height); }
 
     // Use this for initialization
     void Start () {
@@ -30,11 +39,37 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-    void StartGame() {
-        List<List<int>> newBoard = new List<List<int>>(Width);
-        for(int y = 0; y < Height; ++y)
-            newBoard[y] = new List<int>(Height);
-        GameInstance.SetBoard(newBoard, Width, Height);
+    public void StartGame() {
+		//CALCULATE OFFSET
+		Vector3 offset = new Vector3((((Width - 1) * 1.1f) + 0.2f)/ 2.0f, 0, (((Height - 1) * 1.1f) + 0.2f) / 2.0f);
+		//DRAW BOARD
+		List<List<int>> newBoard = new List<List<int>>(Width);
+		List<List<GameObject>> newTiles = new List<List<GameObject>>(Width);
+		for (int x = 0; x < Width; ++x) {
+			newTiles.Add(new List<GameObject>(Height));
+			newBoard.Add(new List<int>(Height));
+			for(int y = 0; y < Height; ++y) {
+				newBoard[x].Add(0);
+				newTiles[x].Add((GameObject)Instantiate(TileInst, new Vector3((x + ((x + 1) * 0.1f)),0 , (y + 1 + ((y + 1) * 0.1f))) - offset, Quaternion.LookRotation(new Vector3(0, 1, 0))));
+			}
+		}
+		GameInstance.SetBoard(newTiles, newBoard, Width, Height);
+		//ADD PLAYERS
+		Amazons.Player[] players = new Amazons.Player[NumberOfPlayers];
+		for (int i = 0; i < NumberOfPlayers; ++i) {
+			players[i] = new Amazons.Player(i, GameInstance);
+			players[i].Pawns = new List<Amazons.Pawn>();
+		}
+		//ADD AMAZONS
+		System.Random rand = new System.Random();
+		foreach(var player in players) {
+			for(int i = 0; i < NumberOfAmazons; ++i) {
+				//CALCULATE POSITION
+				Point pos = new Point(rand.Next(0, Width), rand.Next(0, Height));
+				GameObject newAmazon = (GameObject)Instantiate(AmazonInst, GetVectorFromPoint(pos), Quaternion.identity); 
+				player.Pawns.Add (new Amazon(newAmazon, i));
+			}
+		}
     }
 	
 	bool ActivateAI(Amazons.Player player) {
@@ -80,10 +115,24 @@ public class GameManager : MonoBehaviour {
 	void SetBoardPoint(Point point, int type) {
 		GameInstance.Board[point.X][point.Y] = type;
 	}
+
+	Vector3 GetVectorFromPoint(Point point) {
+		return (GameInstance.Tiles[point.X][point.Y].GetComponent<Transform>().position + new Vector3(0, 0.5f, 0));
+	}
+}
+
+public class Amazon : Amazons.Pawn {
+	public GameObject Pawn;
+	public Amazon(GameObject pawn, int id) {
+		ID = id;
+		Pawn = pawn;
+	}
 }
 
 public class GameInst : Amazons.Game {
-    public void SetBoard(List<List<int>> newBoard, int width, int height) {
+	public List<List<GameObject>> Tiles;
+	public void SetBoard(List<List<GameObject>> tiles, List<List<int>> newBoard, int width, int height) {
+		Tiles = tiles;
         Board = newBoard;
         Height = height;
         Width = width;
