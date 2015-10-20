@@ -5,12 +5,50 @@ using AmazonAIBase;
 
 namespace AmazonsAI
 {
-    public class CraigJong : AmazonAIBase.AIBase
+    public class SecondFillerBot: AmazonAIBase.AIBase
     {
-        public CraigJong()
+        System.Random rand;
+        public SecondFillerBot()
         {
-            StudentName = "CONNOR TAMPSOORT";
+            StudentName = "Second Filler Bot";
+            rand = new System.Random();
+        }
+
+        override public Amazons.Move YourTurn()
+        {
+            Amazons.Move move = new Amazons.Move();
+            List<List<int>> board = Owner.GetBoard_Simple();
+            foreach(var pawn in Owner.Pawns) {
+                for (int x = -1; x < 2; x++) {
+                    for (int y = -1; y < 2; y++) {
+                        if(CheckOutOfBounds(new Point(pawn.Position.X + x, pawn.Position.Y + y))) {
+                            if (board[pawn.Position.X + x][pawn.Position.Y + y] == 0)
+                            {
+                                move.ID = pawn.ID;
+                                move.MoveTo = new Point(pawn.Position.X + x, pawn.Position.Y + y);
+                                move.ShootTo = new Point(pawn.Position.X, pawn.Position.Y);
+                                return move;
+                            }
+                        }
+                    }
+                }
+            }
+            rand = new System.Random();
+            move.ID = rand.Next(0, Owner.Pawns.Count - 1);
+            move.MoveTo = new Point(Owner.Pawns[move.ID].Position.X + 1, Owner.Pawns[move.ID].Position.Y + 1);
+            move.ShootTo = new Point(Owner.Pawns[move.ID].Position.X, Owner.Pawns[move.ID].Position.Y);
+            return move;
+            //return new Amazons.Move();
+        }
+        
+        private bool CheckOutOfBounds(Point point) {
+            if (point.X < Owner.GameInstance.Width && point.X >= 0 &&
+                point.Y < Owner.GameInstance.Height && point.Y >= 0)
+                return true;
+            return false;
 
         }
+
+
     }
 }

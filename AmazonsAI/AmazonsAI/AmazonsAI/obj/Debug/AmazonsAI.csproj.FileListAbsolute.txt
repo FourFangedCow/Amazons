@@ -1,5 +1,0 @@
-C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonsAI\bin\Debug\AmazonsAI.dll
-C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonsAI\bin\Debug\AmazonsAI.pdb
-C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonsAI\obj\Debug\AmazonsAI.csprojResolveAssemblyReference.cache
-C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonsAI\obj\Debug\AmazonsAI.dll
-C:\Users\craig.jong\AmazonsAI\AmazonsAI\AmazonsAI\obj\Debug\AmazonsAI.pdb
