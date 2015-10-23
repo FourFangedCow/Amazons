@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour {
 	public GameObject AmazonInst;
 	public GameObject ArrowInst;
     public GameObject ToggleInst;
+    public GameObject RedXInst;
+    public GameObject SpearInst;
 
     // MOVING ACTOR
     Amazons.Move CurrentMove;
@@ -77,7 +79,7 @@ public class GameManager : MonoBehaviour {
 	void Update () {
         if (GameRunning) {
             if (MoveActor)  {
-                MoveTimer += (Time.deltaTime / 1);
+                MoveTimer += (Time.deltaTime / 0.2f);
                 if (MoveTimer > 1)
                 {
                     MoveActor = false;
@@ -163,6 +165,11 @@ public class GameManager : MonoBehaviour {
         SetTile(player.Pawns[move.ID].Position, 0);
         SetTile(move.MoveTo, player.ID + 1); 	                // Set new pos to id
         SetTile(move.ShootTo, -1);					        // Set shoot pos to -1
+
+        // SET RED X
+        Instantiate(RedXInst, GetVectorFromPoint(move.ShootTo) + new Vector3(0, -0.74f, 0), Quaternion.LookRotation(new Vector3(0, 1, 0)));
+        Instantiate(SpearInst, GetVectorFromPoint(move.ShootTo) + new Vector3(0.09f, -0.38f, 0), Quaternion.identity);
+
         print("COMPLETE MOVE");
         ActivateVisualMove(player, move);
 		return true;
@@ -221,7 +228,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	Vector3 GetVectorFromPoint(Point point) {
-		return (GameInstance.Tiles[point.X][point.Y].GetComponent<Transform>().position + new Vector3(0, 0.5f, 0));
+		return (GameInstance.Tiles[point.X][point.Y].GetComponent<Transform>().position + new Vector3(0, 0.75f, 0));
 	}
 
     public void AddAI(int id) {

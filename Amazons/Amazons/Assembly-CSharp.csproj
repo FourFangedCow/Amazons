@@ -46,12 +46,19 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\AiToggle.cs" />
+     <Compile Include="Assets\FaceCamera.cs" />
      <Compile Include="Assets\GameManager.cs" />
+ <Reference Include="UnityEngine.Advertisements">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="AmazonAIBase">
  <HintPath>C:/Users/craig.jong/MAT364/Amazons/Amazons/Amazons/Assets/AmazonAIBase.dll</HintPath>
