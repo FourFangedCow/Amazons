@@ -22,13 +22,21 @@ namespace AmazonsAI
                 for (int x = -1; x < 2; x++) {
                     for (int y = -1; y < 2; y++) {
                         if(CheckOutOfBounds(new Point(pawn.Position.X + x, pawn.Position.Y + y))) {
-                            if (board[pawn.Position.X + x][pawn.Position.Y + y] == 0)
-                            {
-                                DebugPrint("ASDF");
+                            if (board[pawn.Position.X + x][pawn.Position.Y + y] == 0) {
                                 move.ID = pawn.ID;
                                 move.MoveTo = new Point(pawn.Position.X + x, pawn.Position.Y + y);
-                                move.ShootTo = new Point(pawn.Position.X, pawn.Position.Y);
-                                return move;
+                                board[move.MoveTo.X][move.MoveTo.Y] = 1;
+                                board[pawn.Position.X][pawn.Position.Y] = 0;
+                                for (int x2 = -1; x2 < 2; x2++) {
+                                    for (int y2 = -1; y2 < 2; y2++) {
+                                        if (CheckOutOfBounds(new Point(move.MoveTo.X + x2, move.MoveTo.Y + y2))) {
+                                            if (board[move.MoveTo.X + x2][move.MoveTo.Y + y2] == 0) {
+                                                move.ShootTo = new Point(move.MoveTo.X + x2, move.MoveTo.Y + y2);
+                                                return move;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

@@ -14,7 +14,6 @@ public class FaceCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        print(T_Self.position - new Vector3(T_Targ.position.x, T_Self.position.y, T_Targ.position.z));
         T_Self.rotation = Quaternion.LookRotation(T_Self.position - new Vector3(T_Targ.position.x, T_Self.position.y, T_Targ.position.z));
 	}
 }

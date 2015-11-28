@@ -18,13 +18,14 @@ public class GameManager : MonoBehaviour {
     int Width = 10;
 	int Height = 10;
 	int NumberOfPlayers = 3;
-	int NumberOfAmazons = 4;
+	//int NumberOfAmazons = 4;
 	public GameObject TileInst;
 	public GameObject AmazonInst;
 	public GameObject ArrowInst;
     public GameObject ToggleInst;
     public GameObject RedXInst;
     public GameObject SpearInst;
+	public GameObject EndScreen;
 	Text Console;
     // MOVING ACTOR
     Amazons.Move CurrentMove;
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour {
         int offset = 0;
         int i = 0;
         Transform canvas = GameObject.Find("Canvas").GetComponent<Transform>();
+		EndScreen.SetActive (false);
         string[] aiLibs = Directory.GetFiles(@".\AI\", "*.dll");
         foreach (string path in aiLibs) {
             print(path);
@@ -97,6 +99,14 @@ public class GameManager : MonoBehaviour {
     public void StartGame() {
         GameObject.Destroy(GameObject.Find("Canvas"));
         NumberOfPlayers = ActiveAI.Count;
+
+		//open map
+		StreamReader sr = new StreamReader("./AI/map.txt");
+
+		Width = Int32.Parse(sr.ReadLine());
+		Height = Int32.Parse(sr.ReadLine());
+
+
         //CALCULATE OFFSET
         Vector3 offset = new Vector3((((Width - 1) * 1.1f) + 0.2f)/ 2.0f, 0, (((Height - 1) * 1.1f) + 0.2f) / 2.0f);
 		//DRAW BOARD
@@ -119,8 +129,34 @@ public class GameManager : MonoBehaviour {
             players[i].AI = ActiveAI[i];
             players[i].AI.Owner = players[i];
 		}
-        
-        GameInstance.SetPlayers(players);
+       	GameInstance.SetPlayers(players);
+		//BOARD GEN
+		for (int i = Height - 1; i > -1; --i) {
+				var j = 0;
+				var tok = sr.ReadLine().Split(' ');
+				foreach(var str in tok) {
+					switch(Int32.Parse(str))
+					{
+					case 9:
+						var p = new Point(j, i);
+						SetTile(p, -1);					        // Set shoot pos to -1
+						Instantiate(RedXInst, GetVectorFromPoint(p) + new Vector3(0, -0.74f, 0), Quaternion.LookRotation(new Vector3(0, 1, 0)));
+						Instantiate(SpearInst, GetVectorFromPoint(p) + new Vector3(0.09f, -0.38f, 0), Quaternion.identity);
+						break;
+					case 0:
+						break;
+					default:
+						var pos = new Point(j, i);
+						GameObject newAmazon = (GameObject)Instantiate(AmazonInst, GetVectorFromPoint(pos), Quaternion.identity);
+						SetTile(pos, Int32.Parse(str));
+					players[Int32.Parse(str) - 1].Pawns.Add (new Amazon(newAmazon, players[Int32.Parse(str) - 1].Pawns.Count, pos));
+						break;
+					}
+					j++;
+			}
+		}
+
+		/*
 		//ADD AMAZONS
 		System.Random rand = new System.Random();
 		foreach(var player in players) {
@@ -131,15 +167,20 @@ public class GameManager : MonoBehaviour {
                 SetTile(pos, player.ID + 1);
 				player.Pawns.Add (new Amazon(newAmazon, i, pos));
 			}
+		}*/
+		foreach (var player in players) {
+			print (player.Pawns.Count);
 		}
-
+		sr.Close();  // close the in stream
         GameRunning = true;
         ActivateAI(GameInstance.Players[0]);
+		CurrentPlayer = GameInstance.Players[1];
     }
 	
 	bool ActivateAI(Amazons.Player player) {
         //Amazons.Move move = player.AI.YourTurn();
         //GameInstance.Board
+		var OldPlayer = CurrentPlayer;
         CurrentPlayer = player;
 
 
@@ -153,18 +194,19 @@ public class GameManager : MonoBehaviour {
         if (!CheckLine(player.Pawns[move.ID].Position, move.MoveTo) ||
            !CheckLine(move.MoveTo, move.ShootTo) || move.MoveTo == move.ShootTo) {
             GameRunning = false;
-            print("FAIL MOVE");
+			print("FAIL MOVE");
+			EndScreen.SetActive (true);
+			GameObject.Find ("WinnerText").GetComponent<Text>().text = OldPlayer.AI.StudentName + " wins and " + player.AI.StudentName + " loses";
             return false; // ACTIVE PLAYER LOSES
         }
 
         //player.Pawns[move.ID].Position = move.MoveTo;		// Set pawn pos to correct pos
         //SetBoardPoint(move.MoveTo, move.ID + player.ID); 	// Set new pos to id
         //SetBoardPoint(move.ShootTo, -1);					// Set shoot pos to -1
-
-
+		
+		SetTile(player.Pawns[move.ID].Position, 0);			// Set previous location to 0
         player.Pawns[move.ID].Position = move.MoveTo;		// Set pawn pos to correct pos
-        SetTile(player.Pawns[move.ID].Position, 0);
-        SetTile(move.MoveTo, player.ID + 1); 	                // Set new pos to id
+        SetTile(move.MoveTo, player.ID + 1); 	            // Set new pos to id
         SetTile(move.ShootTo, -1);					        // Set shoot pos to -1
 
         // SET RED X
@@ -192,10 +234,12 @@ public class GameManager : MonoBehaviour {
             case -1:
                 GameInstance.Tiles[point.X][point.Y].GetComponent<SpriteRenderer>().color = ArrowTile;
                 break;
-            case 0:
+			case 0:
+				print ("EMPTY: " + point.X + " " + point.Y);
                 GameInstance.Tiles[point.X][point.Y].GetComponent<SpriteRenderer>().color = EmptyTile;
                 break;
-            default:
+			default:
+				print ("PLAYER: " + point.X + " " + point.Y);
                 GameInstance.Tiles[point.X][point.Y].GetComponent<SpriteRenderer>().color = PlayerTile[id - 1];
                 break;
         }
@@ -211,13 +255,14 @@ public class GameManager : MonoBehaviour {
 			while(x != end.X || y != end.Y) {
                 if (GameInstance.Board[x][y] != 0) {
                     print("HIT ON: " + x + " " + y);
-                    return false;
+                    return false; //LINE FAIL
                 }
 				x += h; y += v;
 			}
-			return true;
+			return true; //LINE CLEAR
 		}
-		return false;
+		print ("CHECK NOT IN LINE OR OUT OF BOUNDS");
+		return false; //NOT IN LINE
 	}
 	
 	bool CheckValidPoint(Point point) {
@@ -237,16 +282,17 @@ public class GameManager : MonoBehaviour {
     }
     public void RemoveAI(int id) {
         ActiveAI.Remove(AllAI[id]);
-    }
+	}
+	
+	public void ResetGame () {
+		Application.LoadLevel(Application.loadedLevel);
+	}
 
     // TIMEOUT THREADING STUFF
 
     private void ActivateCurrentPlayer() {
         CurrentMove = CurrentPlayer.AI.YourTurn();
-        print(CurrentMove.MoveTo.X);
-        print(CurrentMove.MoveTo.Y);
-        print(CurrentMove.ShootTo.X);
-        print(CurrentMove.ShootTo.Y);
+		print(CurrentPlayer.AI.StudentName + " | MOVE: " + CurrentMove.MoveTo.X + "," + CurrentMove.MoveTo.Y + " SHOOT: " + CurrentMove.ShootTo.X + "," + CurrentMove.ShootTo.Y);
 
     }
     static void CallWithTimeout(Action action, int timeoutMilliseconds) {
@@ -288,3 +334,5 @@ public class GameInst : Amazons.Game {
         Width = width;
     }
 }
+
+ 
