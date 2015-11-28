@@ -5,3 +5,10 @@ C:\Users\craig.jong\MAT364\Amazons\AmazonsAI\AmazonsAI\AmazonsAI\bin\Release\Ama
 C:\Users\craig.jong\MAT364\Amazons\AmazonsAI\AmazonsAI\AmazonsAI\obj\Release\AmazonsAI.csprojResolveAssemblyReference.cache
 C:\Users\craig.jong\MAT364\Amazons\AmazonsAI\AmazonsAI\AmazonsAI\obj\Release\SecondFillerBot.dll
 C:\Users\craig.jong\MAT364\Amazons\AmazonsAI\AmazonsAI\AmazonsAI\obj\Release\SecondFillerBot.pdb
+C:\Users\SEEU\MAT364_GroupProject\REPO\Amazons\AmazonsAI\AmazonsAI\AmazonsAI\bin\Release\SecondFillerBot.dll
+C:\Users\SEEU\MAT364_GroupProject\REPO\Amazons\AmazonsAI\AmazonsAI\AmazonsAI\bin\Release\SecondFillerBot.pdb
+C:\Users\SEEU\MAT364_GroupProject\REPO\Amazons\AmazonsAI\AmazonsAI\AmazonsAI\bin\Release\AmazonAIBase.dll
+C:\Users\SEEU\MAT364_GroupProject\REPO\Amazons\AmazonsAI\AmazonsAI\AmazonsAI\bin\Release\AmazonAIBase.pdb
+C:\Users\SEEU\MAT364_GroupProject\REPO\Amazons\AmazonsAI\AmazonsAI\AmazonsAI\obj\Release\AmazonsAI.csprojResolveAssemblyReference.cache
+C:\Users\SEEU\MAT364_GroupProject\REPO\Amazons\AmazonsAI\AmazonsAI\AmazonsAI\obj\Release\SecondFillerBot.dll
+C:\Users\SEEU\MAT364_GroupProject\REPO\Amazons\AmazonsAI\AmazonsAI\AmazonsAI\obj\Release\SecondFillerBot.pdb

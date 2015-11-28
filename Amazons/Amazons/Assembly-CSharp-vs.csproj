@@ -46,6 +46,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AiToggle.cs" />
+     <Compile Include="Assets\FaceCamera.cs" />
      <Compile Include="Assets\GameManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
@@ -57,7 +59,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="AmazonAIBase">
- <HintPath>C:/Users/SEEU/Amazons/Amazons/Amazons/Amazons/Assets/AmazonAIBase.dll</HintPath>
+ <HintPath>C:/Users/SEEU/MAT364_GroupProject/REPO/Amazons/Amazons/Amazons/Assets/AmazonAIBase.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

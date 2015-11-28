@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 public class Point {
     public int X = 0;
@@ -83,10 +84,14 @@ namespace Amazons {
 namespace AmazonAIBase {
 
     public class AIBase {
+        public string DebugString;
         public string StudentName { get; protected set; }
         public Amazons.Player Owner;
         virtual public Amazons.Move YourTurn() { return new Amazons.Move(); }
-
-        public string Test() { return "GASDFASDFASD"; }
+        public string GetDebugString() { var str = DebugString; DebugString = ""; return str; }
+        public void DebugPrint(string info) {
+            using (StreamWriter w = File.AppendText("DebugLog.txt")) { w.WriteLine(info); }
+            DebugString += " " + info;
+        }
     }
 }

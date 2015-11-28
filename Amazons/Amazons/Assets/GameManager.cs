@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
     public GameObject ToggleInst;
     public GameObject RedXInst;
     public GameObject SpearInst;
-
+	Text Console;
     // MOVING ACTOR
     Amazons.Move CurrentMove;
     Amazons.Player CurrentPlayer;
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour {
             toggle.GetComponent<AiToggle>().ID = i++;
             offset -= 40;
         }
-        
+		Console = GameObject.Find ("ConsoleArea").GetComponent<Text>();
         PlayerTile.Add(new Color(0, 1, 0));
         PlayerTile.Add(new Color(0, 0, 1));
         PlayerTile.Add(new Color(0, 1, 1));
@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour {
                     MoveActor = false;
                     if (CurrentPlayerIndex >= NumberOfPlayers)
                         CurrentPlayerIndex = 0;
+					Console.text = GameInstance.Players[CurrentPlayerIndex].AI.GetDebugString();
                     ActivateAI(GameInstance.Players[CurrentPlayerIndex++]);
                 }
                 MovingActor.GetComponent<Transform>().position = Vector3.Lerp(StartingPos, EndPos, MoveTimer);

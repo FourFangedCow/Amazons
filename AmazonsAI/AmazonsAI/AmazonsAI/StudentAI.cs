@@ -24,6 +24,7 @@ namespace AmazonsAI
                         if(CheckOutOfBounds(new Point(pawn.Position.X + x, pawn.Position.Y + y))) {
                             if (board[pawn.Position.X + x][pawn.Position.Y + y] == 0)
                             {
+                                DebugPrint("ASDF");
                                 move.ID = pawn.ID;
                                 move.MoveTo = new Point(pawn.Position.X + x, pawn.Position.Y + y);
                                 move.ShootTo = new Point(pawn.Position.X, pawn.Position.Y);
@@ -48,7 +49,16 @@ namespace AmazonsAI
             return false;
 
         }
-
-
+        List<Amazons.Pawn> GetEnemyPawns() {
+            List<Amazons.Pawn> enemyPawns = new List<Amazons.Pawn>();
+            foreach(var player in Owner.GameInstance.Players) {
+                if (player.ID != Owner.ID) {
+                    foreach (var pawn in player.Pawns) {
+                        enemyPawns.Add(pawn);
+                    }
+                }
+            }
+            return enemyPawns;
+        }
     }
 }
